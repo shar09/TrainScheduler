@@ -63,16 +63,30 @@ database.ref().on("child_added", function(snapshot) {
     console.log(snapshot.val().freq);
     console.log(snapshot.val().minAway);
 
+    //var trainTable = $("#train-table");
+
+    $("#train-table").append(
+        $("<tr>").append(
+            $("<td>").text(snapshot.val().name),
+            $("<td>").text(snapshot.val().dest),
+            $("<td>").text(snapshot.val().time),
+            $("<td>").text(snapshot.val().freq),
+            $("<td>").text(snapshot.val().min),
+        )
+    )
+
     
-    trainName = $("<td>").text(snapshot.val().name);
-    destination = $("<td>").text(snapshot.val().dest);
-    trainTime = $("<td>").text(snapshot.val().time);
-    frequency = $("<td>").text(snapshot.val().freq);
-    minAway = $("<td>").text(snapshot.val().min);
-    tRow.append(trainName, destination, trainTime, frequency, minAway);
-    $("tbody").append(tRow); 
+    // trainName = $("<td>").text(snapshot.val().name);
+    // destination = $("<td>").text(snapshot.val().dest);
+    // trainTime = $("<td>").text(snapshot.val().time);
+    // frequency = $("<td>").text(snapshot.val().freq);
+    // minAway = $("<td>").text(snapshot.val().min);
+    // tRow.append(trainName, destination, trainTime, frequency, minAway);
+    // $("tbody").append(tRow); 
+
+
     // Handlee errors
-  }, function(errorObject) {
+    }, function(errorObject) {
     console.log("Errors handled: " + errorObject.code); 
 });
 
