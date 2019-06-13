@@ -11,13 +11,81 @@
     <!-- Bootstrap CDN-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- Custom style link -->
+    <link rel="stylesheet" href="style.css">
 
     <!-- Firebase References -->
     <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-database.js"></script>
+    
+    <!-- Javascript links -->
+    <script src="logic.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 </head>
 <body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h1 class="display-4">Train Schedule</h1>
+          <p class="lead">Information about all train routes.</p>
+        </div>
+      </div>
 
+
+    <div class="card">
+        <div class="card-header">
+            Add Train
+        </div>
+        <div class="card-body">          
+            <form>
+                 <div class="form-group">
+                    <label for="train-name">Train Name</label>
+                    <input type="text" class="form-control" id="train-name" placeholder="Enter Train Name">
+                </div>
+                <div class="form-group">
+                    <label for="destination">Destination</label>
+                    <input type="text" class="form-control" id="destination" placeholder="Enter Destination">
+                </div>
+                <div class="form-group">
+                    <label for="train-time">First Train Time(HH:mm-military time) </label>
+                    <input type="text" class="form-control" id="train-time" placeholder="HH:mm">
+                </div>
+                <div class="form-group">
+                    <label for="frequency">Frequency(min)</label>
+                    <input type="number" class="form-control" id="frequency" placeholder="Enter Frequency">
+                </div>
+                <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+            </form>    
+        </div>
+    </div>     
+    <br>
+    <div class="card">
+        <div class="card-header">
+            Current Train Schedule
+        </div>
+        <div class="card-body">
+            <table class=table>
+                <thead>
+                    <tr>
+                        <th> Train Name </th>
+                        <th> Destination </th>
+                        <th> Frequency(min) </th>
+                        <th> Next Arrival </th>
+                        <th> Minutes Away </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Trenton Express</td>
+                        <td>Trenton</td>
+                        <td>25</td>
+                        <td>05:35 PM</td>
+                        <td>10</td>
+                    </tr>
+                    <!-- Insert additional movie rows here -->
+                </tbody>
+            </table>  
+        </div>
+    </div>    
 </body>
-    <script src="logic.js"></script>
+    
 </html>
