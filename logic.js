@@ -53,12 +53,6 @@ database.ref().on("child_added", function(snapshot) {
     console.log(snapshot.val().freq);
     //console.log(snapshot.val().min);
 
-    // Assumptions
-    //var tFrequency = 3;
-
-    // Time is 3:30 AM
-    //var firstTime = "03:30";
-
     //First Time (pushed back 1 year to make sure it comes before current time)
     var trainTimeConverted = moment(snapshot.val().time, "HH:mm").subtract(1, "years");
     console.log(trainTimeConverted);
@@ -94,8 +88,6 @@ database.ref().on("child_added", function(snapshot) {
             $("<td>").text(minAway),
         )
     )
-    
-    
     
     // Handlee errors
     }, function(errorObject) {

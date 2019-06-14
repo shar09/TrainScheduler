@@ -1,0 +1,20 @@
+body {
+    width: 1024px;
+    margin: 0 auto;
+}
+
+.jumbotron {
+    background-color: lightslategray;
+}
+
+#caption {
+    margin: 0px 10px;
+}
+
+.card {
+     border-color: lightslategrey;
+}
+
+.card-header {
+    background-color: lightslategray;
+}
