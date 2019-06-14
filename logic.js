@@ -18,8 +18,9 @@ $(document).ready(function() {
     var destination;
     var trainTime;
     var frequency;
-    var minAway;
-    var tRow = $("<tr>");
+    
+    var currentTime = moment();
+    console.log(currentTime);
 
     $("#submit").on("click", function(event) {
         event.preventDefault();
@@ -27,28 +28,17 @@ $(document).ready(function() {
         destination = $("#destination").val().trim();
         trainTime = $("#train-time").val().trim();
         frequency = $("#frequency").val().trim();
-        minAway = "dont know";
         
         console.log(trainName);
         console.log(destination);
         console.log(trainTime);
         console.log(frequency);
-
-       /* var tName = $("<td>").text(trainName);
-        var tDest = $("<td>").text(destination);
-        var tTime = $("<td>").text(trainTime);
-        var tFreq = $("<td>").text(frequency);
-        var tMin = $("<td>").text(minAway);
-       
-        tRow.append(tName, tDest, tTime, tFreq, tMin);
-        $("tbody").append(tRow);*/ 
-
+        
         database.ref().push ({
             name: trainName,
             dest: destination,
             time: trainTime,
             freq: frequency,
-            min: minAway
         });
     });
 });
@@ -61,30 +51,52 @@ database.ref().on("child_added", function(snapshot) {
     console.log(snapshot.val().dest);
     console.log(snapshot.val().time);
     console.log(snapshot.val().freq);
-    console.log(snapshot.val().minAway);
+    //console.log(snapshot.val().min);
 
-    //var trainTable = $("#train-table");
+    // Assumptions
+    //var tFrequency = 3;
 
-    $("#train-table").append(
+    // Time is 3:30 AM
+    //var firstTime = "03:30";
+
+    //First Time (pushed back 1 year to make sure it comes before current time)
+    var trainTimeConverted = moment(snapshot.val().time, "HH:mm").subtract(1, "years");
+    console.log(trainTimeConverted);
+
+    // Current Time
+    var currentTime = moment();
+    console.log(currentTime);
+    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+
+    // Difference between the times
+    var diffTime = moment().diff(moment(trainTimeConverted), "minutes");
+    console.log("DIFFERENCE IN TIME: " + diffTime);
+
+    // Time apart (remainder)
+    var remainder = diffTime % snapshot.val().freq;
+    console.log(remainder);
+
+    // Minute Until Train
+    var minAway = snapshot.val().freq - remainder;
+    console.log("MINUTES TILL TRAIN: " + minAway);
+
+    // Next Train
+    var next = moment().add(minAway, "minutes");
+    var nextTrain = moment(next).format("hh:mm A")
+    console.log("ARRIVAL TIME: " + moment(next).format("hh:mm"));
+
+    $("tbody").append(
         $("<tr>").append(
             $("<td>").text(snapshot.val().name),
             $("<td>").text(snapshot.val().dest),
-            $("<td>").text(snapshot.val().time),
             $("<td>").text(snapshot.val().freq),
-            $("<td>").text(snapshot.val().min),
+            $("<td>").text(nextTrain),
+            $("<td>").text(minAway),
         )
     )
-
     
-    // trainName = $("<td>").text(snapshot.val().name);
-    // destination = $("<td>").text(snapshot.val().dest);
-    // trainTime = $("<td>").text(snapshot.val().time);
-    // frequency = $("<td>").text(snapshot.val().freq);
-    // minAway = $("<td>").text(snapshot.val().min);
-    // tRow.append(trainName, destination, trainTime, frequency, minAway);
-    // $("tbody").append(tRow); 
-
-
+    
+    
     // Handlee errors
     }, function(errorObject) {
     console.log("Errors handled: " + errorObject.code); 
